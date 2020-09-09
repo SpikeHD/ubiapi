@@ -44,7 +44,7 @@ class Ubisoft {
    * @param {String} url 
    * @param {String} path 
    * @param {Object} options 
-   *  Axios options, defaults to a GEt request with default headers
+   *  Axios options, defaults to a GET request with default headers
    */
   async request(url, path, options = { method: 'GET', headers: default_headers }) {
     path = util.ubiEncode(path)
