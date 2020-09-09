@@ -4,7 +4,7 @@ const util = require('./util')
 
 const default_locale = 'en-US'
 const default_market = 'US'
-const default_url = 'https://public-rest.a.upc.ubisoft.com/v1'
+const default_url = 'https://public-rest.a.upc.ubisoft.com'
 let default_headers
 
 class Ubisoft {
@@ -48,10 +48,23 @@ class Ubisoft {
    */
   async request(url, path, options = { method: 'GET', headers: default_headers }) {
     path = util.ubiEncode(path)
+    console.log(url + path)
     let res = await axios(url + path, options)
 
     return res
   }
+
+  // async getMe() {
+  //   let options = {
+  //     method: 'GET',
+  //     headers: default_headers
+  //   }
+  //   let path = '/v3/users/me'
+
+  //   let res = await this.request(default_url, path, options)
+
+  //   return res.data
+  // }
 
   /**
    * Get featured news. This is usually what shows up when you open
@@ -64,7 +77,31 @@ class Ubisoft {
       headers: default_headers
     }
     // News path and params
-    let path = '/news?filter=audience:normal,placement:_uplay_featured,type:featured|free|normal&sort=priority:asc,publicationDate:desc'
+    let path = '/v1/news?filter=audience:normal,placement:_uplay_featured,type:featured|free|normal&sort=priority:asc,publicationDate:desc'
+
+    let res = await this.request(default_url, path, options)
+
+    return res.data
+  }
+
+  /**
+   * Get news article via ID
+   * 
+   * @param {String|Object} data 
+   */
+  async getNewsBody(data) {
+    let id
+
+    if (typeof(data) == 'object') id = data.id
+    else id = data
+
+    // Axios options
+    let options = {
+      method: 'GET',
+      headers: default_headers
+    }
+    // News path and params
+    let path = '/v1/news/' + id + '/body'
 
     let res = await this.request(default_url, path, options)
 
