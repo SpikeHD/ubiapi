@@ -48,7 +48,6 @@ class Ubisoft {
    */
   async request(url, path, options = { method: 'GET', headers: default_headers }) {
     path = util.ubiEncode(path)
-    console.log(url + path)
     let res = await axios(url + path, options)
 
     return res
@@ -85,7 +84,26 @@ class Ubisoft {
   }
 
   /**
-   * Get news article via ID
+   * Get all of the other news articles that are usually shown
+   * 
+   * @param {Number} limit 
+   */
+  async getNews(start, limit) {
+    // Axios options
+    let options = {
+      method: 'GET',
+      headers: default_headers
+    }
+    // News path and params
+    let path = '/v1/news?start=' + start + '&limit=' + limit + '&filter=audience:normal,placement:_uplay_news,type:featured|free|normal&sort=publicationDate:desc'
+
+    let res = await this.request(default_url, path, options)
+
+    return res.data
+  }
+
+  /**
+   * Get news article body via ID
    * 
    * @param {String|Object} data 
    */

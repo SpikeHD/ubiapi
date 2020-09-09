@@ -99,15 +99,14 @@ var Ubisoft = /*#__PURE__*/function () {
                   headers: default_headers
                 };
                 path = util.ubiEncode(path);
-                console.log(url + path);
-                _context2.next = 5;
+                _context2.next = 4;
                 return axios(url + path, options);
 
-              case 5:
+              case 4:
                 res = _context2.sent;
                 return _context2.abrupt("return", res);
 
-              case 7:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -173,7 +172,50 @@ var Ubisoft = /*#__PURE__*/function () {
       return getFeaturedNews;
     }()
     /**
-     * Get news article via ID
+     * Get all of the other news articles that are usually shown
+     * 
+     * @param {Number} limit 
+     */
+
+  }, {
+    key: "getNews",
+    value: function () {
+      var _getNews = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(start, limit) {
+        var options, path, res;
+        return _regenerator["default"].wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                // Axios options
+                options = {
+                  method: 'GET',
+                  headers: default_headers
+                }; // News path and params
+
+                path = '/v1/news?start=' + start + '&limit=' + limit + '&filter=audience:normal,placement:_uplay_news,type:featured|free|normal&sort=publicationDate:desc';
+                _context4.next = 4;
+                return this.request(default_url, path, options);
+
+              case 4:
+                res = _context4.sent;
+                return _context4.abrupt("return", res.data);
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function getNews(_x5, _x6) {
+        return _getNews.apply(this, arguments);
+      }
+
+      return getNews;
+    }()
+    /**
+     * Get news article body via ID
      * 
      * @param {String|Object} data 
      */
@@ -181,11 +223,11 @@ var Ubisoft = /*#__PURE__*/function () {
   }, {
     key: "getNewsBody",
     value: function () {
-      var _getNewsBody = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(data) {
+      var _getNewsBody = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(data) {
         var id, options, path, res;
-        return _regenerator["default"].wrap(function _callee4$(_context4) {
+        return _regenerator["default"].wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 if ((0, _typeof2["default"])(data) == 'object') id = data.id;else id = data; // Axios options
 
@@ -195,22 +237,22 @@ var Ubisoft = /*#__PURE__*/function () {
                 }; // News path and params
 
                 path = '/v1/news/' + id + '/body';
-                _context4.next = 5;
+                _context5.next = 5;
                 return this.request(default_url, path, options);
 
               case 5:
-                res = _context4.sent;
-                return _context4.abrupt("return", res.data);
+                res = _context5.sent;
+                return _context5.abrupt("return", res.data);
 
               case 7:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
-      function getNewsBody(_x5) {
+      function getNewsBody(_x7) {
         return _getNewsBody.apply(this, arguments);
       }
 
