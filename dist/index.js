@@ -1,5 +1,6 @@
 "use strict";
 
 module.exports = {
-  Ubisoft: require('./Ubisoft')
+  Ubisoft: require('./Ubisoft'),
+  Rainbow: require('./Rainbow')
 };

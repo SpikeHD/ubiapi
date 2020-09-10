@@ -48,9 +48,19 @@ class Ubisoft {
    */
   async request(url, path, options = { method: 'GET', headers: default_headers }) {
     path = util.ubiEncode(path)
+    console.log(url+path)
     let res = await axios(url + path, options)
 
     return res
+  }
+
+  /**
+   * Get icon
+   * 
+   * @param {String} profileId 
+   */
+  async icon(profileId) {
+    return 'https://ubisoft-avatars.akamaized.net/' + profileId + '/default_146_146.png'
   }
 
   // async getMe() {
@@ -64,6 +74,32 @@ class Ubisoft {
 
   //   return res.data
   // }
+
+  /**
+   * Find players based on name and platform
+   * 
+   * @param {String} name 
+   * @param {String} platform 
+   */
+  async findPlayers(name) {
+    let platforms = [
+      'xbl',
+      'psn',
+      'steam',
+      'uplay'
+    ]
+    let resps = []
+
+    await platforms.forEach(async p => {
+      let path = '/v2/profiles?nameOnPlatform=' + name + '&platformType=' + p
+
+      let res = await this.request(default_url, path)
+
+      resps.push(res)
+    })
+
+    return resps
+  }
 
   /**
    * Get featured news. This is usually what shows up when you open
